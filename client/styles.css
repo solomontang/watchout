@@ -1,4 +1,16 @@
-/* your beautiful css styling goes here! */
+svg {
+  height: 480px;
+  width: 852px;
+  background-color: black;
+  /*background-image: url("space.jpg");*/
+}
+
+.enemy {
+  background-image: url("asteroid.png");
+  background-size: contain;
+  height: 50px;
+  width: 50px;
+}
 
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
