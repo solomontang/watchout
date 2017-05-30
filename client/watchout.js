@@ -35,7 +35,7 @@ var update = function(data) {
   // UPDATE EXISTING ASTEROIDS
   asteroids.data(data)
     .transition()
-      .duration(1000)
+      .duration(500)
       .attr('x', function(d) {return d.x})
       .attr('y', function(d) {return d.y});
 
@@ -54,6 +54,12 @@ var updateScoreBoard = function() {
   scoreBoard.score++;
   // if collisions, collision++ and current score = 0
 
+  if (collision) {
+    collision = false;
+    scoreBoard.score = 0;
+    scoreBoard.collisions++;
+  }
+
   if (scoreBoard.score > scoreBoard.highScore) {
     scoreBoard.highScore = scoreBoard.score;
   }
@@ -63,15 +69,24 @@ var updateScoreBoard = function() {
     .text(scoreBoard.highScore);
   var currentscore = d3.select('.current span')
     .text(scoreBoard.score);
+  var collisions = d3.select('.collisions span')
+    .text(scoreBoard.collisions);
 };
 
 //initialize
 update(enemies);
+
+var collision = false;
+
+var checkCollision = gameBoard.selectAll('image')
+  .on('mouseover', function() {
+    collision = true;
+  });
 
 //call update function on set interval
 setInterval(function() {
   updateScoreBoard();
   newPosition();
   update(enemies);
-}, 1000);
+}, 500);
 
