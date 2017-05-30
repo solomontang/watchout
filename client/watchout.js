@@ -3,6 +3,12 @@
 var enemies = [];
 var nEnemies = 30;
 
+var scoreBoard = {
+  score: 0,
+  highScore: 0,
+  collisions: 0
+};
+
 var gameOptions = {
   height: 480,
   width: 852
@@ -29,7 +35,7 @@ var update = function(data) {
   // UPDATE EXISTING ASTEROIDS
   asteroids.data(data)
     .transition()
-      .duration(500)
+      .duration(1000)
       .attr('x', function(d) {return d.x})
       .attr('y', function(d) {return d.y});
 
@@ -43,16 +49,29 @@ var update = function(data) {
   // asteroids.exit().remove(); unnecessary line for now
 };
 
+// function that increments score and displays changes to the html page
+var updateScoreBoard = function() {
+  scoreBoard.score++;
+  // if collisions, collision++ and current score = 0
 
-//have an update function
+  if (scoreBoard.score > scoreBoard.highScore) {
+    scoreBoard.highScore = scoreBoard.score;
+  }
+
+  // HTML PORTION
+  var highscore = d3.select('.highscore span')
+    .text(scoreBoard.highScore);
+  var currentscore = d3.select('.current span')
+    .text(scoreBoard.score);
+};
+
 //initialize
 update(enemies);
-  //need update and
 
 //call update function on set interval
 setInterval(function() {
+  updateScoreBoard();
   newPosition();
   update(enemies);
 }, 1000);
 
-// console.log(enemies);
