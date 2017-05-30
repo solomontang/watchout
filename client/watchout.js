@@ -22,15 +22,25 @@ newPosition();
 var gameBoard = d3.select('.board').append('svg:svg');
 //transition?
 var update = function(data) {
-  
-  gameBoard.selectAll('image.enemies').data(data, (d) => d.id)
-    .enter().append('image')
+  // DATA JOIN
+  var asteroids = gameBoard.selectAll('image')
+    .data(data);
+
+  // UPDATE EXISTING ASTEROIDS
+  asteroids.data(data)
+    .transition()
+      .duration(500)
+      .attr('x', function(d) {return d.x})
+      .attr('y', function(d) {return d.y});
+
+  // ENTER
+  asteroids.enter().append('image')
     .attr('class', 'enemy')
     .attr('xlink:href', 'asteroid.png')
     .attr('x', function(d) {return d.x})
     .attr('y', function(d) {return d.y});
 
-  // gameBoard.exit().remove();
+  // asteroids.exit().remove(); unnecessary line for now
 };
 
 
