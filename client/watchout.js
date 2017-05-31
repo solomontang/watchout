@@ -36,7 +36,7 @@ var spawnFred = function(data) {
 
   fred.enter().append('image')
     .attr('class', 'player')
-    .attr('xlink:href', 'player.jpg')
+    .attr('xlink:href', 'player.png')
     .attr('x', function() {return player.x})
     .attr('y', function() {return player.y})
 };
@@ -91,6 +91,16 @@ var updateScoreBoard = function() {
 //initialize
 newPosition();
 spawnFred([undefined]);
+
+gameBoard.on('mousemove', function () {
+  var loc = d3.mouse(this);
+  player = {x: loc[0]+'px', y:loc[1]+'px'};
+  console.log(player)
+  d3.select('.player').attr('x',player.x);
+  d3.select('.player').attr('y',player.y);
+})
+
+
 update(enemies);
 
 var collision = false;
@@ -106,12 +116,12 @@ var checkCollision = gameBoard.selectAll('image')
     } else {
       fredSwap = true;
       gameBoard.selectAll('.player')
-        .attr('xlink:href', 'player.jpg');
+        .attr('xlink:href', 'player.png');
     }
 
   });
 
-//call update function on set interval
+// call update function on set interval
 setInterval(function() {
   updateScoreBoard();
   newPosition();

@@ -34,7 +34,7 @@ div .collisions {
 }
 
 .player {
-  background-image: url("player.jpg");
+  background-image: url("player.png");
   background-size: cover;
   height: 200px;
   width: 200px;
