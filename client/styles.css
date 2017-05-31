@@ -2,7 +2,28 @@ svg {
   height: 480px;
   width: 852px;
   background-color: black;
-  /*background-image: url("space.jpg");*/
+  background-image: url("space.jpg");
+}
+
+.scoreboard {
+  height: 60px;
+  width: 200px;
+  background-color: gray;
+  padding: 10px;
+  margin: 10px;
+
+}
+
+div .highscore {
+  font-weight: bold;
+}
+
+div .current {
+  font-weight: bold;
+}
+
+div .collisions {
+  font-weight: bold;
 }
 
 .enemy {
@@ -12,6 +33,16 @@ svg {
   width: 50px;
 }
 
+.player {
+  background-image: url("player.jpg");
+  background-size: cover;
+  height: 200px;
+  width: 200px;
+}
+
+span {
+  font-weight: normal;
+}
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
 

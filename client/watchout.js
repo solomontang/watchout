@@ -1,8 +1,4 @@
-// start slingin' some d3 here.
-
-var enemies = [];
-var nEnemies = 30;
-
+// SCOREBOARD
 var scoreBoard = {
   score: 0,
   highScore: 0,
@@ -14,6 +10,15 @@ var gameOptions = {
   width: 852
 };
 
+// PLAYER INITIALIZE AND METHODS
+var player = {
+  x: gameOptions.width / 2 - 100,
+  y: gameOptions.height / 2 - 100
+};
+var enemies = [];
+var nEnemies = 10;
+var gameBoard = d3.select('.board').append('svg:svg');
+
 var newPosition = function () {
   _.range(0, nEnemies).forEach((i) => {
     enemies[i] = {
@@ -24,12 +29,22 @@ var newPosition = function () {
   });
 };
 
-newPosition();
-var gameBoard = d3.select('.board').append('svg:svg');
+
+var spawnFred = function(data) {
+  var fred = gameBoard.selectAll('.player')
+    .data(data);
+
+  fred.enter().append('image')
+    .attr('class', 'player')
+    .attr('xlink:href', 'player.jpg')
+    .attr('x', function() {return player.x})
+    .attr('y', function() {return player.y})
+};
+
 //transition?
 var update = function(data) {
   // DATA JOIN
-  var asteroids = gameBoard.selectAll('image')
+  var asteroids = gameBoard.selectAll('.enemy')
     .data(data);
 
   // UPDATE EXISTING ASTEROIDS
@@ -74,13 +89,26 @@ var updateScoreBoard = function() {
 };
 
 //initialize
+newPosition();
+spawnFred([undefined]);
 update(enemies);
 
 var collision = false;
+var fredSwap = true;
 
-var checkCollision = gameBoard.selectAll('image')
+var checkCollision = gameBoard.selectAll('image') 
   .on('mouseover', function() {
     collision = true;
+    if (fredSwap) {
+      fredSwap = false;
+      gameBoard.selectAll('.player')
+        .attr('xlink:href', 'cage.png');
+    } else {
+      fredSwap = true;
+      gameBoard.selectAll('.player')
+        .attr('xlink:href', 'player.jpg');
+    }
+
   });
 
 //call update function on set interval
